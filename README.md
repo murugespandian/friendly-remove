@@ -1,6 +1,6 @@
 # friendly-remove
 
-A simple bash script which overrides the "rm" command in linux. In this prototype, we are just overriding the "/usr/bin/rm" command in  the bash script using  "alias" command. We are temporarly maintaining the deleted files in the ~/.RM-Trash directory. You can restore those deleted files from this derectory within a day. In every midnight,your system will rung cronjobs to deleted the trashed files in RM-Trash directory.
+A simple bash script which overrides the "rm" command in linux. In this prototype, we are just overriding the "/usr/bin/rm" command in  the bash script using  "alias" command. We are temporarly maintaining the deleted files in our custom ~/.RM-Trash directory. You can restore those deleted files from this directory within a day. Dont worry,that directory wont grow bigger. In every midnight,your system will run cronjobs to deleted the trashed files in RM-Trash directory.
 
 
 USAGE
