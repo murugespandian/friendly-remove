@@ -10,16 +10,6 @@ USAGE
 3. undo, to restore the lastly trashed(using the command rm) files or directory or both.
 
 
-PS: If you want to change the cronjobs time limit change the entry in crontab -e file . cronjobs configuration structure,
-
-\n
- # ┌───────────── min (0 - 59) \n
- # │ ┌────────────── hour (0 - 23)\n
- # │ │ ┌─────────────── day of month (1 - 31)\n
- # │ │ │ ┌──────────────── month (1 - 12)\n
- # │ │ │ │ ┌───────────────── day of week (0 - 6) (0 to 6 are Sunday to Saturday, or use names; 7 is Sunday, the same as 0)\n
- # │ │ │ │ │\n
- # │ │ │ │ │\n
- # * * * * * \n
+PS: If you want to change the cronjobs time limit change the entry in cronjobs by executing the below command "crontab -e". 
 
 
