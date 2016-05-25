@@ -1,0 +1,111 @@
+alias rm=movkey
+alias rmf="/bin/rm -rvf"
+alias undo=undo
+
+movkey()
+{
+	destDir=~/.RM-Trash
+        lastMovFile=~/.RM-Trash/.undo/lastmov.txt
+	lastUndoFile=~/.RM-Trash/.undo/undo.txt
+
+	pwd >$lastUndoFile
+
+	#To remove the old entry
+	echo  >$lastMovFile 
+
+	for file in "$@"
+	do 
+    		echo " out $file"
+	
+	
+		source=$file
+		destDir=~/.RM-Trash
+		
+		file=$file
+		isFile=true;
+		if [[ -d $file ]]; 
+		then
+			basename=$file
+			isFile="false"
+		elif [[ -f $file ]]; 
+		then
+			basename=${file%.*}
+			isFile=true
+		fi
+	
+		#basename=${file%.*}
+		#ext=${file##*.}
+		if [ $isFile = "true" ];
+		then	
+			ext=${file##*.}	
+			if [[ ! -e "$destDir/$basename.$ext" ]]; 
+			then
+				#echo "Source $source basename $basename"
+				mv -v "$source" "$destDir" >>$lastMovFile
+			else
+				num=2
+    				while [[ -e "$destDir/$basename$num.$ext" ]];
+			 	do
+        				(( num++ ))
+    				done
+				echo "Source $source basename $basename"
+				mv -v "$source" "$destDir/$basename$num.$ext"  >>$lastMovFile
+			fi
+		else
+			echo "Directory"
+
+			if [[ ! -e "$destDir/$basename" ]];
+                	then
+                 	        #echo "Source $source basename $basename"
+                        	mv -v "$source" "$destDir" >>$lastMovFile
+                	else
+                 	       num=2
+                   	       while [[ -e "$destDir/$basename$num" ]];
+                        	do
+                                	(( num++ ))
+                       	 	done
+                        	echo "Source $source basename $basename$num"
+                        	mv -v "$source" "$destDir/$basename$num"  >>$lastMovFile
+                	fi 
+
+	 
+		fi 
+
+		#mv -fv $@ ~/.RM-Trash >~/.RM-Trash/.undo/lastmov.txt
+
+	
+		done
+
+}
+
+
+undo()
+{
+	echo "UNDOING"
+	lastMovFile=~/.RM-Trash/.undo/lastmov.txt
+	undoDirPath=~/.RM-Trash/.undo/undo.txt
+	
+	undoFileDir=""
+
+	read -r undoFileDir<$undoDirPath
+	
+	while IFS='' read -r line || [[ -n "$line" ]];
+	do
+		
+		if [ ! -z "$line" -a "$line" != " " ]; then
+	
+			arrIN=(${line//->/ })
+
+			mv ${arrIN[1]} $undoFileDir/${arrIN[0]}	
+		fi	
+	
+	done < "$lastMovFile"
+	
+	echo "DONE."
+
+	echo  > $lastMovFile
+	echo  > $undoDirPath
+}
+
+
+
