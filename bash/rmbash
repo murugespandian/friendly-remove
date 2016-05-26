@@ -1,8 +1,8 @@
-alias rm=movkey
+alias rm=mov
 alias rmf="/bin/rm -rvf"
 alias undo=undo
 
-movkey()
+mov()
 {
 	destDir=~/.RM-Trash
         lastMovFile=~/.RM-Trash/.undo/lastmov.txt
