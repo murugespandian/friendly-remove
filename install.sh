@@ -8,7 +8,7 @@ if [ -f $PWD/bash/rmbash ]; then
 fi " >> ~/.bash_profile
 
 
-crontab -l | { cat; echo "0 0 * * * rmf -rvf /Users/muruges-0043/.RM-Trash/*"; } | crontab -
+crontab -l | { cat; echo "0 0 * * * rmf -rvf ~/.RM-Trash/*"; } | crontab -
 
 
 source ~/.bash_profile
